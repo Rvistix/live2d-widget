@@ -66,8 +66,7 @@ function loadWidget(config) {
         // 检测用户活动状态，并在空闲时显示消息
         let userAction = false,
             userActionTimer,
-            messageArray = result.message.default,
-            lastHoverElement;
+            messageArray = result.message.default;
         window.addEventListener("mousemove", () => userAction = true);
         window.addEventListener("keydown", () => userAction = true);
         setInterval(() => {
@@ -84,9 +83,7 @@ function loadWidget(config) {
         showMessage(welcomeMessage(result.time), 7000, 11);
         window.addEventListener("mouseover", event => {
             for (let { selector, text } of result.mouseover) {
-                if (!event.target.closest(selector)) continue;
-                if (lastHoverElement === selector) return;
-                lastHoverElement = selector;
+                if (!event.target.matches(selector)) continue;
                 text = randomSelection(text);
                 text = text.replace("{text}", event.target.innerText);
                 showMessage(text, 4000, 8);
@@ -95,7 +92,7 @@ function loadWidget(config) {
         });
         window.addEventListener("click", event => {
             for (let { selector, text } of result.click) {
-                if (!event.target.closest(selector)) continue;
+                if (!event.target.matches(selector)) continue;
                 text = randomSelection(text);
                 text = text.replace("{text}", event.target.innerText);
                 showMessage(text, 4000, 8);
